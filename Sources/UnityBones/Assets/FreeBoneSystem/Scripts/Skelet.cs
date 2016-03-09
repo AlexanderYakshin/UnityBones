@@ -1,11 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
-
-namespace Assets.Bones.Scripts
+namespace FreeBoneSystem
 {
 	[ExecuteInEditMode]
 	public class Skelet: MonoBehaviour
@@ -24,7 +19,7 @@ namespace Assets.Bones.Scripts
 		{
 			//EditorUpdate();
 		}
-
+/*
 #if UNITY_EDITOR
 		void OnEnable()
 		{
@@ -35,6 +30,6 @@ namespace Assets.Bones.Scripts
 		{
 			//EditorApplication.update -= EditorUpdate;
 		}
-#endif
+#endif*/
 	}
 }
