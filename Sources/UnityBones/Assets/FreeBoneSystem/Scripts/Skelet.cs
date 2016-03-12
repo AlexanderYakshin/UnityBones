@@ -17,6 +17,12 @@ namespace FreeBoneSystem
 
 		void Update()
 		{
+			foreach (Bone b in gameObject.GetComponentsInChildren<Bone>())
+			{
+				BoneIK ik = b.GetComponent<BoneIK>();
+				if (ik != null)
+					ik.resolveSK2D();
+			}
 			//EditorUpdate();
 		}
 /*

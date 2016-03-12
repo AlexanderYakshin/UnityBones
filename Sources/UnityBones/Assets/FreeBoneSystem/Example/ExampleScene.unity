@@ -111,6 +111,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2018175032}
+  - {fileID: 612292512}
   m_Father: {fileID: 305761227}
   m_RootOrder: 1
 --- !u!1 &305761225
@@ -177,8 +178,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 423773488}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.31770998, y: 1.4297642, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9621579, w: -0.2724927}
+  m_LocalPosition: {x: 0.31771004, y: 1.4297643, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1199305235}
@@ -214,8 +215,50 @@ MonoBehaviour:
   _head: {x: 0.9254652, y: -0.7440292}
   _snapToParent: 1
   BoneColor: {r: 0, g: 0, b: 0, a: 0}
+  ShowGizmos: 1
   AngleLimits: {x: 0, y: 360}
-  Limit: {x: 0, y: 180}
+  Limit: {x: 0, y: 360}
+--- !u!1 &612292511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 612292512}
+  - 114: {fileID: 612292513}
+  m_Layer: 0
+  m_Name: Bone_target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &612292512
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 612292511}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.06, y: 0.56, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 92260129}
+  m_RootOrder: 1
+--- !u!114 &612292513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 612292511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90620fb637a4871489e06bd67a79c669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GizmosType: 0
+  GizmosColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1199305234
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,6 +268,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1199305235}
   - 114: {fileID: 1199305236}
+  - 114: {fileID: 1199305237}
   m_Layer: 0
   m_Name: Bone
   m_TagString: Untagged
@@ -238,7 +282,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1199305234}
-  m_LocalRotation: {x: 0, y: 0, z: 0.28129855, w: 0.9596203}
+  m_LocalRotation: {x: 0, y: 0, z: 0.85584915, w: 0.51722556}
   m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -259,8 +303,26 @@ MonoBehaviour:
   _head: {x: 0.31770998, y: 1.4297642}
   _snapToParent: 1
   BoneColor: {r: 0.822, g: 0, b: 0, a: 1}
+  ShowGizmos: 1
   AngleLimits: {x: 0, y: 360}
-  Limit: {x: 270, y: 90}
+  Limit: {x: 0, y: 360}
+--- !u!114 &1199305237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1199305234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f4519c7556230a4288f51fa7578f506, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 612292512}
+  ShowAngleLimits: 1
+  damping: 1
+  FreezeTarget: 0
+  SavedHeadPosition: {x: 0, y: 0}
+  chainLength: 0
 --- !u!1 &1387909900
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +404,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1387909900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0.906, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -355,6 +417,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 2018175032}
+  - 114: {fileID: 2018175033}
   m_Layer: 0
   m_Name: Bone_target
   m_TagString: Untagged
@@ -369,8 +432,21 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2018175031}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.52, y: 0.96, z: 0}
+  m_LocalPosition: {x: -1, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 92260129}
   m_RootOrder: 0
+--- !u!114 &2018175033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2018175031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90620fb637a4871489e06bd67a79c669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GizmosType: 0
+  GizmosColor: {r: 0, g: 1, b: 0, a: 1}

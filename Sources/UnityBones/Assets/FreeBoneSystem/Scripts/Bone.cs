@@ -32,7 +32,7 @@ namespace FreeBoneSystem
 		[SerializeField]
 		private bool _snapToParent;
 		public Color BoneColor;
-
+		public bool ShowGizmos = true;
 		private Transform BoneHaedPositionHelper;
 		private bool _targetObjectHelperOn;
 

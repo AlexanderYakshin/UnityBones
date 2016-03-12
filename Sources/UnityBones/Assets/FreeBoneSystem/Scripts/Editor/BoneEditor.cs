@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEditor;
 
 namespace FreeBoneSystem.Editor
@@ -64,6 +65,15 @@ namespace FreeBoneSystem.Editor
 
 			LimitAngles.vector2Value = new Vector2(min, max);
 
+			EditorGUI.BeginChangeCheck();
+			var showGizmos = EditorGUILayout.Toggle(new GUIContent("Toogle show"),_bone.ShowGizmos);
+			if (EditorGUI.EndChangeCheck())
+			{
+				_bone.ShowGizmos = showGizmos;
+				_bone.GetComponentsInChildren<Bone>().ToList().ForEach(bone => bone.ShowGizmos = _bone.ShowGizmos);
+				SceneView.RepaintAll();
+			}
+
 			EditorGUILayout.BeginHorizontal();
 			if (GUILayout.Button(new GUIContent("Add child")))
 			{
@@ -123,7 +133,7 @@ namespace FreeBoneSystem.Editor
 			}
 
 			Undo.RegisterCreatedObjectUndo(bone, "Add bone IK");
-			bone.AddComponent<BoneIK>();
+			Undo.AddComponent<BoneIK>(bone);
 
 			if (bone != Selection.activeGameObject)
 			{
@@ -154,7 +164,6 @@ namespace FreeBoneSystem.Editor
 			Handles.color = Color.white;
 			if (Handles.Button(point, _bone.transform.rotation, size * HandleSize, size * PickSize, Handles.DotCap))
 			{
-				//_selectedIndex = index;
 				Repaint();
 			}
 
@@ -176,6 +185,8 @@ namespace FreeBoneSystem.Editor
 		[DrawGizmo(GizmoType.NonSelected | GizmoType.Selected)]
 		static void DrawBone(Bone scr, GizmoType gizmoType)
 		{
+			if (!scr.ShowGizmos)
+				return;
 			if (scr.gameObject == Selection.activeGameObject)
 			{
 				Handles.color = Color.yellow;

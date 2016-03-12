@@ -1,11 +1,12 @@
 ﻿using System.Linq;
+using System.Runtime.Remoting.Channels;
 using UnityEngine;
 using UnityEditor;
 
 namespace FreeBoneSystem.Editor
 {
 	[CustomEditor(typeof(BoneIK))]
-	public class BoneIkEditor: UnityEditor.Editor
+	public class BoneIkEditor : UnityEditor.Editor
 	{
 		private Bone _bone;
 		private BoneIK _boneIk;
@@ -22,6 +23,7 @@ namespace FreeBoneSystem.Editor
 			_boneIk = (BoneIK)target;
 			_bone = _boneIk.GetComponent<Bone>();
 		}
+
 
 		public override void OnInspectorGUI()
 		{
@@ -62,13 +64,13 @@ namespace FreeBoneSystem.Editor
 
 			var target = new GameObject(selectedBoneIk.name + "_target").transform;
 			target.parent = ikTransform;
-
+			target.gameObject.AddComponent<IkHelper>();
 			selectedBoneIk.Target = target;
 			return target;
 		}
 
 		[DrawGizmo(GizmoType.NonSelected | GizmoType.Selected)]
-		static void DrawBoneIKGizmo(BoneIK scr, GizmoType gizmoType)
+		public static void DrawBoneIKGizmo(BoneIK scr, GizmoType gizmoType)
 		{
 			if (scr.Target != null && scr.ShowAngleLimits && (Selection.activeGameObject == scr.gameObject || Selection.activeGameObject == scr.Target.gameObject))
 			{
@@ -82,7 +84,7 @@ namespace FreeBoneSystem.Editor
 					Transform nodetransform = node1.transform;
 					Vector3 position = nodetransform.position;
 
-					float handleSize = HandleUtility.GetHandleSize(position);
+					float handleSize = HandleUtility.GetHandleSize(position) / 2f;
 					float discSize = handleSize * 0.5f;
 
 					float parentRotation = nodetransform.parent != null && nodetransform.parent.GetComponent<Bone>() != null ? nodetransform.parent.eulerAngles.z : 0;
@@ -99,10 +101,9 @@ namespace FreeBoneSystem.Editor
 					Handles.color = Color.green;
 					Handles.DrawLine(position, position + min * discSize);
 					Handles.DrawLine(position, position + max * discSize);
-					
+
 					Handles.DrawLine(position, position + scr.Target.transform.parent.position);
 				}
-
 			}
 		}
 	}

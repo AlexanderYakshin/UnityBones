@@ -2,6 +2,8 @@
 
 namespace FreeBoneSystem
 {
+
+
 	[ExecuteInEditMode]
 	public class BoneIK : MonoBehaviour
 	{
@@ -11,6 +13,7 @@ namespace FreeBoneSystem
 		public float damping = 1;
 		public bool FreezeTarget;
 		public Vector2 SavedHeadPosition;
+
 
 		public Transform RootBone
 		{
@@ -77,31 +80,30 @@ namespace FreeBoneSystem
 
 		void Update()
 		{
-			//_currentBone = GetComponent<Bone>();
 			if (chainLength < 0)
 				chainLength = 0;
 		}
 
-		/**
-		 * Code ported from the Gamemaker tool SK2D by Drifter
-		 * http://gmc.yoyogames.com/index.php?showtopic=462301
-		 * 
-		 **/
-
 		public void resolveSK2D()
 		{
-			Transform node = transform;
-			var chainCounter = ChainLength;
-
-			while (chainCounter > 0)
+			for (int i = 0; i < 5; i++)
 			{
-				RotateTowardsTarget(node);
-				var bonenode = node.parent.GetComponent<Bone>();
-				if (bonenode == null)
-					break;
+				Transform node = transform;
+				var chainCounter = ChainLength;
 
-				node = node.parent;
-				chainCounter--;
+				while (chainCounter > 0)
+				{
+					RotateTowardsTarget(node);
+
+					if (node.parent == null)
+						break;
+					var bonenode = node.parent.GetComponent<Bone>();
+					if (bonenode == null)
+						break;
+
+					node = node.parent;
+					chainCounter--;
+				}
 			}
 		}
 
@@ -113,13 +115,27 @@ namespace FreeBoneSystem
 			if (Target == null)
 				return;
 
-			int i = 0;
+			/*int i = 0;
 
 			while (i < 5)
 			{
 				resolveSK2D();
 				i++;
+			}*/
+		}
+
+		private Vector2 HandlePosition(Transform nodeTransform, Transform previousNodeTransform, Vector2 diff)
+		{
+			var bone = nodeTransform.GetComponent<Bone>();
+			var resultDif = diff;
+			var target = Target.position;
+			if (previousNodeTransform == null && bone != null)
+			{
+				resultDif = target - (Vector3)bone.Head;
 			}
+
+			nodeTransform.position += (Vector3)resultDif;
+			return resultDif;
 		}
 
 		void RotateTowardsTarget(Transform nodeTransform)
@@ -142,7 +158,8 @@ namespace FreeBoneSystem
 			angle = ClampAngle(nodeTransform.eulerAngles.z, angle, bone.Limit);
 			angle += parentRotation;
 
-			nodeTransform.rotation = Quaternion.RotateTowards(nodeTransform.rotation, Quaternion.Euler(0, 0, angle), 1f);
+			//nodeTransform.rotation = Quaternion.RotateTowards(nodeTransform.rotation, Quaternion.Euler(0, 0, angle), 0.1f);
+			nodeTransform.rotation = Quaternion.Euler(0, 0, angle);
 		}
 
 		public float SignedAngle(Vector3 a, Vector3 b)
